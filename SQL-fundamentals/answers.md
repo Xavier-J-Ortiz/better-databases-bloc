@@ -64,7 +64,7 @@ author TEXT,
 genre TEXT,
 publish_date DATE,
 copies INTEGER,
-avail_copies INTEGER);
+available_copies INTEGER);
 
 INSERT INTO books 
 VALUES(1, 
@@ -94,7 +94,7 @@ VALUES(3,
 9)
 
 UPDATE books 
-SET avail_copies = 8 
+SET available_copies = 8 
 WHERE isbn = 3;
 
 DELETE FROM books
@@ -153,9 +153,9 @@ CREATE TABLE inbox
 (id INTEGER,
 subject TEXT,
 sender TEXT,
-copied TEXT,
+recipients TEXT,
 body TEXT,
-time_sent TIMESTAMP,
+datetime_sent TIMESTAMP,
 read BOOLEAN,
 chain_id INTEGER);
 
