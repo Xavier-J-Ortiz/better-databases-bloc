@@ -131,4 +131,72 @@ FROM employees AS a
 CROSS JOIN shifts AS b;
 ```
 
+8) 
+
+SELECT v.name, d.name
+FROM volunteer AS v
+LEFT OUTER JOIN dogs AS d
+ON v.foster_id = d.id;
+
+SELECT a.first_name, a.last_name, d.name
+FROM adoptions
+WHERE adoptions.date >= '2017-08-11'
+JOIN adopters AS a ON a.id = adoptions.adopter
+JOIN dog AS d ON d.id = adoptions.dog;
+
+SELECT a.name, d.dogs
+FROM adoptions
+WHERE adoptions.dog IS NULL
+INNER JOIN adopters AS a ON a.id = adoptions.adopter
+CROSS JOIN dogs AS d;
+
+SELECT d.name, c.name
+FROM adoptions
+FULL OUTER JOIN cats AS c
+FULL OUTER JOIN dogs AS d
+WHERE 
+(adoptions.cat IS NULL AND adoptions.dog IS NOT NULL) 
+OR 
+(adoptions.dog IS NULL AND adoptions.cat IS NOT NULL);
+
+SELECT v.name, d.name
+FROM volunteers AS v
+FULL OUTER JOIN dogs AS d ON v.foster_id = d.id;
+
+9)
+
+SELECT a.name
+FROM adoptions
+INNER JOIN cats AS c ON c.id = adoptions.cats
+WHERE cats.name = 'Seashell'
+INNER JOIN adopters AS a ON a.id = adoptions.adopter;
+
+10)
+
+SELECT p.name h.rank
+FROM holds AS h
+JOIN patrons AS p ON p.id = h.user_id
+JOIN books AS b ON b.isbn = h.isbn
+WHERE b.title = 'Harry Potter and the Sourcerer's Stone'
+ORDER BY rank ASC;
+
+SELECT b.title t.check_out_date
+FROM books AS b
+LEFT JOIN transactions AS t ON t.checked_in_date IS NULL;
+
+SELECT AVG(t.checked_in_date - t.checked_out_date) AS read_time, b.title
+FROM books AS b
+JOIN transactions AS t ON t.checked_out_date >= '2017-08-12'
+GROUP BY b.title
+ORDER BY read_time ASC;
+
+SELECT b.title
+FROM books AS b
+LEFT JOIN transactions AS t ON t.checked_out_date >= '2012-09-12'
+WHERE t.checked_out_date IS NULL;
+
+SELECT p.name, b.book
+FROM patrons AS p
+LEFT JOIN transactions AS t ON (p.id = t.id AND t.checked_in_date IS NULL)
+LEFT JOIN book AS b ON b.isbn = t.isbn;
 
