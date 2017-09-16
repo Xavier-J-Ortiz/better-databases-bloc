@@ -122,8 +122,7 @@ FROM scores
 GROUP BY student_name
 HAVING AVG(score) < 70;
 ```
-
-In terms of performance, I've read in an [article](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwi_s9bVlabWAhVl64MKHS6jCXYQFggmMAA&url=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F328636%2Fwhich-sql-statement-is-faster-having-vs-where&usg=AFQjCNFgP3uB-LVc2FTHe_Y0v3MM3b66kQ) it's better to use a the `WHERE` theoretically as it would yield a result set before returning rows, `HAVING` would restrict the result set after bringing all the rows, implying that because of this `WHERE` is faster.
+`HAVING` in terms of performance is faster than `WHERE` when dealing with aggregated data, as the `HAVING` would evaluate the data with less rows (due to aggregation), the `WHERE` clause would evaluate every single row before aggregation (more rows), and hence would take a longer.
 
 7)
 
@@ -138,14 +137,14 @@ SELECT intake_date, name
 FROM cats
 ORDER BY intake_date;
 
-SELECT name, date
+SELECT id, date
 FROM adoptions
 ORDER BY date DESC
 LIMIT 5;
 
-SELECT name, gender, age
+SELECT name
 FROM cats
-WHERE gender = 'F' AND age > 2
+WHERE gender = 'F' AND age >= 2
 ORDER BY age DESC;
 
 SELECT donor, SUM(amount)
