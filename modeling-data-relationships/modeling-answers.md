@@ -6,7 +6,8 @@ a)
 SELECT guests.first_name, guests.last_name
 FROM guests
 LEFT JOIN bookings ON bookings.guest_id = guests.id
-WHERE bookings.guest_id IS NULL;
+WHERE bookings.guest_id IS NULL
+LIMIT 1;
 ```
 b) 
 ```
@@ -40,27 +41,27 @@ a)
 
 We definitely need a `students` entity, as well as a `course` entity in order to track the students in the school, as well as the courses give in the school. 
 
-Since the question requires that we have also the grades for each student taking a class, we will need a `grades` entity as well. 
+Since the question requires that we have also the grades for each student taking a class, we will need a `grades` entity as well for grade given to a student in a semester.
 
 **What fields/attributes will each entity need**
 
-A `students` entity will need the following attributes `id`, `first_name`, and `last_name`. 
+A `students` entity will need the following attributes `id` like `1`, `first_name` like `'Xavier'`, and `last_name` like `'Ortiz'`. 
 
-The `courses` entity will need the following attributes: `id`, and `course_name`. 
+The `courses` entity will need the following attributes: `id` like `1`, `credits` like `4`, and `name` like `'Physics Lab'`. 
 
-The `grades` entity will need the following attributes: `id`, `course_id`, and `student_id`.
+The `grades` entity will need the following attributes: `id` like `1`, `course_id` like `1`, `letter` representing the letter grade like `A`, `score` representing the actual numeric score of the course like `84` out of 100, `semester` like `'Fall'`, `'Spring'`, or `'Summer'`, `year` like `2017`, and `student_id` like `1`.
 
 **What data types do we need to use?**
 
 For the `students`, `id` should be an INTEGER and a PRIMARY KEY, `first_name` and `last_name` should be VARCHAR.
 
-For `courses`, `id` should be an INTEGER and a PRIMARY KEY, `course_name` should be a VARCHAR and `credits` as an INTEGER. 
+For `courses`, `id` should be an INTEGER and a PRIMARY KEY, `name` should be a VARCHAR and `credits` as an INTEGER. 
 
-For `grades`, `id` should be an INTEGER and the PRIMARY KEY.`course_id` is a FOREIGN KEY that REFERENCES `courses.id`,and `student_id` is also a FOREIGN KEY that REFERENCES `students.id`. Both of these FOREIGN KEYS should be an INTEGER. Finally, grade is a CHAR(1), that represents the single letter grade.
+For `grades`, `id` should be an INTEGER and the PRIMARY KEY.`course_id` is a FOREIGN KEY that REFERENCES `courses.id`,and `student_id` is also a FOREIGN KEY that REFERENCES `students.id`. Both of these FOREIGN KEYS should be an INTEGER. The `letter` is a CHAR(1), that represents the single letter grade. The `score` would be the numeric grade earned in the class, and would be an INTEGER. Also in grades, it would be a good idea to add the `semester` which would be a VARCHAR, as well as the `year` which would be an INTEGER. 
 
 **what relationships exist between entities?**
 
-As mentioned in a previous queston in this section a), every row in `students` can be taking multiple courses. Every class the student takes will have a grade.
+As mentioned in a previous queston in this section a), every student in `students` can be taking multiple courses in a semester. Every course the student takes will have a grade.
 
 Conversely, every class will have multiple students, and each student in the course will have a grade.
 
@@ -92,11 +93,12 @@ WHERE courses.name  = 'Digital Circuits Lab';
 b)
 
 ```
-SELECT grades.grade, COUNT(*) AS amount
+SELECT grades.letter, COUNT(*) AS amount
 FROM students
 JOIN grades ON grades.student_id = students.id
-GROUP BY grades.grade
-ORDER BY grades.grade ASC;
+WHERE grades.course_id = 1
+GROUP BY grades.letter
+ORDER BY grades.letter ASC;
 ```
 
 c)
