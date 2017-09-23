@@ -133,18 +133,19 @@ HAVING SUM(amount) > 200;
 
 8)
 
-SELECT intake_date, name 
+SELECT name 
 FROM cats
 ORDER BY intake_date;
 
-SELECT id, date
+SELECT cat, date
 FROM adoptions
 ORDER BY date DESC
 LIMIT 5;
 
-SELECT name
+SELECT name, MAX(age)
 FROM cats
-WHERE gender = 'F' AND age >= 2
+GROUP BY name, gender, age
+HAVING gender = 'F' AND age >= 2
 ORDER BY age DESC;
 
 SELECT donor, SUM(amount)
