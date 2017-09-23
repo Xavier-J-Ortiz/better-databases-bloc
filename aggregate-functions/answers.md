@@ -139,6 +139,7 @@ ORDER BY intake_date;
 
 SELECT cat, date
 FROM adoptions
+WHERE cat IS NOT NULL
 ORDER BY date DESC
 LIMIT 5;
 
