@@ -4,53 +4,23 @@
 
 **CROSS JOIN** - it shows all possible combinations between rows from table A and rows from table B, so a result from the query would be <# of A rows> x <# of B rows>
 
-A real world example would be if I had a table with fruit juices, and another table with entrees at a high school cafeteria. A CROSS JOIN would allow me to compare all the possible combinations of meals for the high schoolers.
-
-```
-SELECT m.dish, d.drink
-FROM meals AS m
-CROSS JOIN drink AS d;
-```
+A real world example would be if a nutritionist wanted to evaluate all the possible meal combinations that kids in highschool could have at lunch. If each kid were to choose a drink, and a main serving the nutritionist would want to verify that the highschool is allowing enough variety on a day to day basis. `CROSS JOIN` would allow me to compare all the possible combinations of meals for the high schoolers and allow the nutritionists to evaluate the combinations.
 
 **INNER JOIN** - it's the result of a query between 2 tables where the output is the intersection of table A and table B that satisfies a specified conditional statement between both tables using the `ON` statement.
 
-A real world example would be if, there were a table of students being specified in the `FROM` portion of the query, and another table of different extracurricular societies that keeps records of students by their student ID. We could use the `INNER JOIN`, to get a list of students that are found in a given society using an INNER JOIN between these two tables. The `INNER JOIN` would return matches as specified in the `ON` statement. The query would look something like this.
+A real world example would be of the head guidance counselor looking to assign students to his peers. He would like to create a list of students and the society they are in, in order for him to best match each student to a given guidance counselor based on the society they are in.
 
-```
-SELECT students.name societies.society
-FROM students
-INNER JOIN societies ON students.id = societies.student_id;
-```
+**LEFT OUTER JOIN** - similar to the INNER JOIN. Lets assume table A is specified in the `FROM` statement, and table B is specified in the `LEFT OUTER JOIN` statement. In the query, all columns from table A will be represented in the output. Columns pertaining to table B will have values resulting from an `INNER JOIN` if the corresponding conditional statement specified in the `ON` section is TRUE and will be joined with the corresponding row from table A.  If the conditional statment specified in the `ON` section is FALSE, columns pertaining to table B will show up as `NULL` values.
 
-**LEFT OUTER JOIN**- similar to the INNER JOIN, but assuming table A is specified in the `FROM` statement, in the output query, there would be a row for every row in table A. If the conditional statement specified in `ON` is not met, then this row output null values in the columns of table B.
+Our head guidance counselor realizes that in his previous request from the Database department, he was excluding all students that weren't enrolled in a society. These students would also need a guidance counselr. He would like a list of all students, and if they are in a society, list their society too.
 
-Similar to the setup of the INNER JOIN, except if we do a LEFT OUTER JOIN instead, we would get the students already in the extracurricular society and also any student that is not in the extracurricular activity. This could be good in order to see which students could be good recruiting targets.
+**RIGHT OUTER JOIN** - similar to the LEFT INNER JOIN. Lets assume table A is specified in the `FROM` statement, and table B is specified in the `RIGHT OUTER JOIN` statement. In the query, all columns from table B will be represented in the output. Columns pertaining to table A will have values resulting from an `INNER JOIN` if the corresponding conditional statement specified in the `ON` section is TRUE and will be joined with the corresponding row from table B. If the conditional statment specified in the `ON` section is FALSE, columns pertaining to table A will show up as `NULL` values.
 
-```
-SELECT students.name societies.society
-FROM students
-LEFT JOIN societies ON students.id = societies.student_id;
-```
-
-**RIGHT OUTER JOIN** - similar to LEFT OUTER JOIN, except instead of focusing on the table specified in the `FROM` statement (in the previous case it was table A), we would focus on the table linked to the  `RIGHT OUTER JOIN` statement, in this case, table B. Similarly, there will be a single row in the output for every row in table B, and any row that does not meet the conditional in the `ON` statement will have null values in the output values of columns from table A.
-
-In the extracurricular society example shown before, using a RIGHT OUTER JOIN would yield an output similar to the INNER JOIN output, _plus_ if we've got societies with no members, they would show up. This would be useful for example to pinpoint societies for students interested in building a society from the ground up.
-
-```
-SELECT students.name societies.society
-FROM students
-RIGHT JOIN societies ON students.id = societies.student_id;
-```
+The head guidance counselor would like to get a list of all societies, with the students that are part of them, and just show the society name in order to reflect if the society has no students.
 
 **FULL OUTER JOIN** - It's the combination of an INNER JOIN, LEFT OUTER JOIN, and RIGHT OUTER JOIN.
 
-Similar to the LEFT OUTER JOIN, RIGHT OUTER JOIN, and the INNER JOIN. We would get the output of the LEFT JOIN, and the RIGHT JOIN and would be useful in being able to easily find the students that have no society, and perhaps also point out to them which societies they would be able to make the most impact in by helping create it from the ground up.
-
-```
-SELECT students.name societies.society
-FROM students
-FULL OUTER JOIN societies ON students.id = societies.student_id;
-```
+A guidance counselor wants a list of all students and all societies, and wants to see which students are linked to each society, which student is not linked to a society, as well as which society lacks any students.
 
 3) **Primary key** would be a key that is a unique identifier in a table, and is only found once within the entire table. This would allow you to identify a single row of data just by it's **primary key**.
 
@@ -58,9 +28,9 @@ A **primary key** real world example would be in a college, your student ID #. T
 
 A **foreign key** would be a key in a table that links entries from this table to another table via the other table's *primary key*. Typically used in many to one relationships where we could link multiple of the same *primary keys* in a table by assigning it to a *foreign key* value.
 
-A **foreign key** real world example would be your major's program ID found within your Colleges *students* table. Alternatively, the foreign key could also be a society that the student belongs to. The major ID or society ID would be the *primary key* in the College's `program major` table or the `societies` table respectively. The major ID or society ID could both be **foreign keys** in the `students` table.
+A **foreign key** real world example would be your major's program ID found within your College's database. Alternatively, the foreign key could also be a society that the student belongs to. The major ID or society ID would be the *primary key* in the College majors listings or the societies records respectively. The major ID or society ID could both be **foreign keys** within the students records.
 
-4) Aliasing is utilizing a different variable name to represent a table's name or a column's name. Typically done by using the statement `AS` when declaring a `FROM` or `JOIN` statement for  representing a table name, such as:
+4) Aliasing is utilizing a different variable name to represent a table's name or a column's name. When there are multiple references to a table name, it can be beneficial to avoid a very long query, to alias a name in order to shorten a query's charachters, as well as simplify a perhaps multi-table query and improve readability. This is typically achieved by using the statement `AS` when declaring a `FROM` or `JOIN` statement for  representing a table name, such as:
 
 > SELECT t.column1 
 > FROM table_name AS t
@@ -95,6 +65,8 @@ NATURAL JOIN charachters;
 this query would yield the real names of users with emails that match in both `fantasy_gamer` table and the `charachters` table.
 
 This is because there exists an `email_address` column in both the `fantasy_gamer` table, as well as the `charachters` table.
+
+A query like this would be used to match a real name to a charachter within an online gaming world with the intent of sending the gamer emails with their real name, instead of their charachter's name, tailored at the email greeting.
 
 7) 
 
@@ -145,80 +117,12 @@ contract_business=# SELECT * FROM employees;
            5 | Tammy   | F
 ```
 
-So for the first part, this is listing all employees and all shifts:
-
-```
-SELECT a.name, b.day_of_week, b.shift
-FROM employees AS a
-INNER JOIN shifts AS b
-ON a.employee_id = b.employee_id;
-
-
-  name   | day_of_week | shift 
----------+-------------+-------
- Xavier  | Monday      |     1
- Xavier  | Tuesday     |     1
- Xavier  | Wednesday   |     1
- Xavier  | Thursday    |     1
- Xavier  | Friday      |     1
- Maria   | Monday      |     2
- Maria   | Tuesday     |     2
- Maria   | Wednesday   |     2
- Maria   | Thursday    |     2
- Maria   | Friday      |     2
- Roger   | Monday      |     0
- Roger   | Tuesday     |     0
- Roger   | Wednesday   |     0
- Roger   | Thursday    |     0
- Roger   | Friday      |     0
- Justine | Saturday    |     0
- Justine | Sunday      |     0
- Omar    | Saturday    |     1
- Omar    | Sunday      |     1
- Tammy   | Saturday    |     2
- Tammy   | Sunday      |     2
-(21 rows)
-```
-
-OR because I used the same column name `employee_id` in both tables `employees` and `shifts`, I could use `NATURAL JOIN`, and the same output would be shown.
-
-```
-contract_business=# SELECT a.name, b.day_of_week, b.shift
-FROM employees AS a
-NATURAL JOIN shifts AS b;
-
-
-  name   | day_of_week | shift 
----------+-------------+-------
- Xavier  | Monday      |     1
- Xavier  | Tuesday     |     1
- Xavier  | Wednesday   |     1
- Xavier  | Thursday    |     1
- Xavier  | Friday      |     1
- Maria   | Monday      |     2
- Maria   | Tuesday     |     2
- Maria   | Wednesday   |     2
- Maria   | Thursday    |     2
- Maria   | Friday      |     2
- Roger   | Monday      |     0
- Roger   | Tuesday     |     0
- Roger   | Wednesday   |     0
- Roger   | Thursday    |     0
- Roger   | Friday      |     0
- Justine | Saturday    |     0
- Justine | Sunday      |     0
- Omar    | Saturday    |     1
- Omar    | Sunday      |     1
- Tammy   | Saturday    |     2
- Tammy   | Sunday      |     2
-(21 rows)
-```
 For the second part, I was albe to create a list of possible schedules using `CROSS JOIN`:
 
 ```
-contract_business=# SELECT a.name, b.day_of_week, b.shift
-FROM employees AS a
-CROSS JOIN shifts AS b;
+contract_business=# SELECT e.name, s.day_of_week, s.shift
+FROM employees AS e
+CROSS JOIN shifts AS s;
 
   name   | day_of_week | shift 
 ---------+-------------+-------
@@ -353,16 +257,23 @@ CROSS JOIN shifts AS b;
 
 8) 
 
+a)
+
 SELECT v.name, d.name
 FROM volunteers AS v
 LEFT OUTER JOIN dogs AS d
 ON v.foster_id = d.id;
 
-SELECT a.first_name, a.last_name, d.name, c.name
+b)
+
+SELECT a.first_name, a.last_name, d.name AS dog_name, c.name AS cat_name, ad.date
 FROM adoptions AS ad
 LEFT JOIN dogs AS d ON d.id = ad.dog
 LEFT JOIN cats AS c ON c.id = ad.cat
 JOIN adopters AS a ON ad.adopter = a.id
+WHERE ad.date > '2017-8-23';
+
+c)
 
 SELECT a.first_name, a.last_name, d.name
 FROM adopters AS a
@@ -370,54 +281,59 @@ LEFT JOIN adoptions AS ad ON a.id = ad.adopter
 CROSS JOIN dogs AS d
 WHERE ad.id IS NULL AND d.adoption_date IS NULL;
 
+d)
 
 SELECT d.name AS dog, c.name AS cat  
 FROM adoptions as ad
 FULL OUTER JOIN cats AS c ON ad.cat = c.id
 FULL OUTER JOIN dogs AS d ON ad.dog = d.id
-WHERE ad.dog IS NULL AND ad.cat IS NULL;
+WHERE ad.fee IS NULL;
 
-SELECT v.name, d.name
+---Alternative Query---
+
+SELECT d.name AS dog, c.name AS cat  
+FROM dogs AS d
+FULL OUTER JOIN cats AS c ON 1 = 2
+WHERE (c.adoption_date IS NULL) AND (d.adoption_date IS NULL);
+
+e)
+
+SELECT v.name AS volunteer_name, d.name AS dog_name
 FROM volunteers AS v
 FULL OUTER JOIN dogs AS d ON v.foster_id = d.id
 WHERE adoption_date IS NULL;
 
 9)
 
-SELECT a.first_name, a.last_name
+SELECT adopters.first_name, adopters.last_name
 FROM adoptions
-INNER JOIN cats AS c ON c.id = adoptions.cat
-INNER JOIN adopters AS a ON a.id = adoptions.adopter
-WHERE c.name = 'Seashell';
+INNER JOIN cats ON cats.id = adoptions.cat
+INNER JOIN adopters ON adopters.id = adoptions.adopter
+WHERE cats.name = 'Seashell';
 
 10)
 
-SELECT p.name h.rank
-FROM holds AS h
-JOIN patrons AS p ON p.id = h.user_id
-JOIN books AS b ON b.isbn = h.isbn
-WHERE b.title = 'Harry Potter and the Sourcerer''s Stone'
+SELECT patrons.name, holds.rank
+FROM holds
+JOIN patrons ON patrons.id = holds.user_id
+JOIN books ON books.isbn = holds.isbn
+WHERE books.title = 'Harry Potter and the Sourcerer''s Stone'
 ORDER BY rank ASC;
 
 SELECT b.title, t.checked_out_date
 FROM books AS b
-LEFT JOIN transactions AS t ON t.isbn = b.isbn
-WHERE checked_in_date IS NULL;
+LEFT JOIN transactions AS t ON t.isbn = b.isbn AND t.checked_in_date IS NULL;
 
-SELECT AVG(t.checked_in_date::timestamp - t.checked_out_date::timestamp) AS read_time, b.title 
+SELECT COUNT(*) AS times_checked_out, b.title 
 FROM books AS b
-JOIN transactions AS t ON t.isbn = b.isbn
-WHERE t.checked_out_date >= '2017-08-12' AND t.checked_in_date IS NOT NULL
+JOIN transactions AS t ON t.isbn = b.isbn AND t.checked_out_date >= '2017-08-23'
 GROUP BY b.title;
 
 SELECT b.title, t.checked_out_date
 FROM books AS b
-LEFT JOIN transactions AS t ON b.isbn = t.isbn
-WHERE t.checked_out_date >= '2012-09-15';
+JOIN transactions AS t ON b.isbn = t.isbn AND t.checked_out_date < '2012-9-23';
 
 SELECT p.name, b.title
-FROM patrons AS p
-LEFT JOIN transactions AS t ON (p.id = t.user_id AND t.checked_in_date IS NULL)
-LEFT JOIN books AS b ON b.isbn = t.isbn
-WHERE b.title IS NOT NULL;
-
+FROM transactions AS t
+RIGHT JOIN patrons AS p ON p.id = t.user_id AND t.checked_in_date IS NULL
+LEFT JOIN books AS b ON b.isbn = t.isbn;
