@@ -8,7 +8,7 @@ A real world example would be if a nutritionist wanted to evaluate all the possi
 
 **INNER JOIN** - it's the result of a query between 2 tables where the output is the intersection of table A and table B that satisfies a specified conditional statement between both tables using the `ON` statement.
 
-A real world example would be of the head guidance counselor looking to assign students to his peers. He would like to create a list of students and the society they are in, in order for him to best match each student to a given guidance counselor based on the society they are in.
+A real world example would be of the head guidance counselor looking to assign students to his peers. He would like to create a list of students and the society they are in, in order for him to best match each student to a given guidance counselor, or recommend colleges, majors, or further extracurricular activities based on the interests/activities in the society they are in. Also could help as a conversation starter with the student who is brand new to get the ball rolling. 
 
 **LEFT OUTER JOIN** - similar to the INNER JOIN. Lets assume table A is specified in the `FROM` statement, and table B is specified in the `LEFT OUTER JOIN` statement. In the query, all columns from table A will be represented in the output. Columns pertaining to table B will have values resulting from an `INNER JOIN` if the corresponding conditional statement specified in the `ON` section is TRUE and will be joined with the corresponding row from table A.  If the conditional statment specified in the `ON` section is FALSE, columns pertaining to table B will show up as `NULL` values.
 
@@ -16,11 +16,21 @@ Our head guidance counselor realizes that in his previous request from the Datab
 
 **RIGHT OUTER JOIN** - similar to the LEFT INNER JOIN. Lets assume table A is specified in the `FROM` statement, and table B is specified in the `RIGHT OUTER JOIN` statement. In the query, all columns from table B will be represented in the output. Columns pertaining to table A will have values resulting from an `INNER JOIN` if the corresponding conditional statement specified in the `ON` section is TRUE and will be joined with the corresponding row from table B. If the conditional statment specified in the `ON` section is FALSE, columns pertaining to table A will show up as `NULL` values.
 
-The head guidance counselor would like to get a list of all societies, with the students that are part of them, and just show the society name in order to reflect if the society has no students.
+The head guidance counselor would like to get a list of all societies, with the students that are part of them, and also show the society name in order to reflect if the society has no students.
+
+The society which a student is in would be useful data for the guidance counselor, as it would show what interests a student may be pouring extra time into. Knowing this information would be helpful in guiding a student towards colleges, majors, or even other extra curriculum activities like other societies that could use their help, or a senior classman serving as a mentor for a Freshman.
+
+The society with no student would be useful information in case the counselor has a new freshman student that has not signed up to a society yet. These Societies with no students could be 'top' picks for freshmen, as they will have 4 years to build it from scratch, become the 'first' president, or 'first' treasurer of the society, as well as grow from the successes and mistakes of starting a society from scratch. A freshman with interests in one of these brand new societies would be a top candidate to recommend starting the society from the ground up.
 
 **FULL OUTER JOIN** - It's the combination of an INNER JOIN, LEFT OUTER JOIN, and RIGHT OUTER JOIN.
 
 A guidance counselor wants a list of all students and all societies, and wants to see which students are linked to each society, which student is not linked to a society, as well as which society lacks any students.
+
+A guidance counselor would like to use the information from the students and the societies they are in because with this information, it could help the couselor guide the students towards colleges, vocations, even college majors, or even consider them to be a mentor
+
+A guidance couselor could use the information from students without societies in order to pair them up with a society based off of the student's interests. If a certain student without a society is interested in the startup or startup culture, a society without any students could be a great pairing for this type of "startup oriented" student.
+
+A guidance counselor would find the information useful, that is, societies without any students so that he could set these as top priority for freshmen without any societies at all. Freshmen, and students that are inclined to be "startup oriented" would be ideal for these new societies, as it is aligned with their interests. Also, this would help the counselor in easliy identifying these groups.
 
 3) **Primary key** would be a key that is a unique identifier in a table, and is only found once within the entire table. This would allow you to identify a single row of data just by it's **primary key**.
 
