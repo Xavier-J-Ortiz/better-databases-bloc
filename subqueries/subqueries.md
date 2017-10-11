@@ -273,3 +273,10 @@ SELECT total_revenue
 FROM transactions, flights
 WHERE transactions.flight_number = flights.flight_number AND (flights.destination = 'ATL' OR flights.origin = 'ATL');
 ```
+
+
+12)
+
+The `JOIN` statements are easier to read in my opinion. There's a lot less clutter in reading a join and because the `JOIN` encompasses the idea of two tables being joined together, it makes it easier to read.
+
+The subqueries are easier to write in my opinion. Mainly because I can write a query for a part of what I'm looking for, and then start chunking down into more granular detail towards what I want with another query.
