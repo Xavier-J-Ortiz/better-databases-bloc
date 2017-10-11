@@ -120,22 +120,16 @@ WHERE adopters.id NOT IN
   (SELECT adopter FROM adoptions);
 ```
 
-d) ??????
+d) 
 
 ```
-SELECT dogs.name AS dog_name, NULL AS cat_name
-FROM dogs
-WHERE NOT EXISTS 
-  (SELECT adoptions.dog 
-  FROM adoptions 
-  WHERE dogs.id = adoptions.dog)
-UNION
-SELECT NULL AS dog_name, cats.name AS cat_name
-FROM cats
-WHERE NOT EXISTS 
-  (SELECT adoptions.cat 
-  FROM adoptions 
-  WHERE cats.id = adoptions.cat);
+SELECT concat(adopted_cats.name, dogs.name) AS unadopted_pet, adopted_cats.date
+FROM dogs 
+RIGHT JOIN 
+  (SELECT cats.name, adoptions.date, adoptions.dog
+  FROM cats
+  RIGHT JOIN adoptions ON cats.id = adoptions.cat) 
+  AS adopted_cats ON dogs.id = adopted_cats.dog;
 ```
 
 e)
