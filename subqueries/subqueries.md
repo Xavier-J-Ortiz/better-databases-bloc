@@ -233,3 +233,43 @@ SELECT patrons.name,
   checked_in_date IS NULL)
 FROM patrons;
 ```
+
+11)
+
+a)
+
+```
+SELECT DISTINCT airplane_model
+FROM flights AS f1
+WHERE 100 <= ALL (SELECT seats_sold
+FROM transactions, flights
+WHERE transactions.flight_number = flights.flight_number
+AND f1.airplane_model = flights.airplane_model
+AND transactions.date >= '9/10/2017');
+
+```
+
+b)
+
+```
+SELECT plane_seat_data.destination, plane_seat_data.origin
+FROM transactions, 
+  (SELECT flights.airplane_model, airplanes.seat_capacity, flights.flight_number, flights.destination, flights.origin
+  FROM airplanes, flights
+  WHERE flights.airplane_model = airplanes.model) 
+  AS plane_seat_data
+WHERE transactions.flight_number = plane_seat_data.flight_number AND
+(transactions.seats_sold/CAST(plane_seat_data.seat_capacity AS float)) >= 0.90
+AND transactions.date >= '9/10/2017';
+```
+
+
+c)
+
+I didn't really need to use a subquery for this one.
+
+```
+SELECT total_revenue                                                                                           
+FROM transactions, flights
+WHERE transactions.flight_number = flights.flight_number AND (flights.destination = 'ATL' OR flights.origin = 'ATL');
+```
